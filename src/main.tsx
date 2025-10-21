@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 
-import { BrowserRouter, Route, Routes } from "react-router";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 
 import { NuqsAdapter } from "nuqs/adapters/react";
 
@@ -20,6 +20,7 @@ import DepartmentListPage from "./app/dashboard/departments/page";
 import TierListPage from "./app/dashboard/tiers/page";
 import LocationListPage from "./app/dashboard/locations/page";
 import EmployeeListPage from "./app/dashboard/employees/page";
+import NotFoundPage from "./app/dashboard/not-found/page";
 
 import { Toaster } from "./components/ui/sonner";
 import CustomQueriesPage from "./app/dashboard/custom-queries/page";
@@ -54,6 +55,11 @@ createRoot(document.getElementById("root")!).render(
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <Routes>
+            <Route
+              path="/"
+              element={<Navigate to="/dashboard/departments" replace />}
+            />
+
             <Route path="dashboard" element={<DashboardLayout />}>
               <Route path="departments" element={<DepartmentListPage />} />
               <Route path="tiers" element={<TierListPage />} />
@@ -61,6 +67,8 @@ createRoot(document.getElementById("root")!).render(
               <Route path="employees" element={<EmployeeListPage />} />
               <Route path="custom-queries" element={<CustomQueriesPage />} />
             </Route>
+
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </BrowserRouter>
         <Toaster />
